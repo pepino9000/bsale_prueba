@@ -114,17 +114,16 @@
       try {
         spinnerOn();
         //crea una paginación para la clase "products"
-        $(".products")
-          .pagination({
-            //datos con los que crea la paginación
-            dataSource: data,
-            //total de productos a mostrar
-            pageSize: 12,
-            callback: function (data, pagination) {
-              $(".products .wrapper").empty();
-              data.forEach((element) => {
-                $(".products .wrapper")
-                  .append(`<div class="col-sm-6 col-md-4 col-xl-3 product" meta=${element.id}>
+        $(".products").pagination({
+          //datos con los que crea la paginación
+          dataSource: data,
+          //total de productos a mostrar
+          pageSize: 12,
+          callback: function (data, pagination) {
+            $(".products .wrapper").empty();
+            data.forEach((element) => {
+              $(".products .wrapper")
+                .append(`<div class="col-sm-6 col-md-4 col-xl-3 product" meta=${element.id}>
                                 <div class="box" >
                                   <div class="box__img">
                                     <img class="img-fluid" src="${element.url_image}">
@@ -136,10 +135,12 @@
                                   <button class="btn btn-gold" onClick="alertMessage()">Comprar</button>
                                 </div>
                               </div>`);
-              });
-            },
-          })
-          .then(spinnerOff());
+            });
+          },
+        });
+        setTimeout(function () {
+          spinnerOff();
+        }, 1800);
       } catch (error) {
         console.log(error);
       }
