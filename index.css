@@ -1,0 +1,64 @@
+body {
+  color: white;
+  background-color: #212529;
+}
+.box {
+  border: solid 1px black;
+  border-radius: 10px;
+  padding: 20px;
+  height: 95%;
+  background-color: black;
+}
+.products {
+  margin: 5% 10% 10% 10%;
+}
+.box__title {
+  font-size: 14px;
+}
+.box__img {
+  height: 11em;
+  background-color: white;
+}
+.box__name {
+  margin-top: 20px;
+  height: 40px;
+}
+.box__img > img {
+  width: 100%;
+  display: block;
+  margin: auto;
+  height: auto;
+  width: 90%;
+  max-height: 170px;
+}
+button {
+  width: 100%;
+  margin: 8px 0px;
+}
+.nav-search {
+  margin: auto 0 auto 7%;
+}
+.btn-gold {
+  background-color: gold;
+}
+.navbar-header {
+  float: left;
+}
+.navbar-nav {
+  float: right;
+}
+.spinner-border {
+  margin: 25% 50%;
+}
+.btn-category {
+  width: 100px;
+  margin: 20px auto;
+  padding: 15px;
+  text-transform: capitalize;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 600;
+}
+input {
+  width: 300px;
+}
