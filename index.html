@@ -61,6 +61,7 @@
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://pagination.js.org/dist/2.1.4/pagination.min.js"></script>
   <script>
+    //muestra un spinner cuando el sitio carga
     async function spinnerOn() {
       try {
         $(".products").empty();
@@ -69,6 +70,7 @@
         console.log(error);
       }
     }
+    //quita el spinner
     function spinerOff() {
       try {
         $(".spinner__div").hide();
@@ -76,6 +78,7 @@
         console.log(error);
       }
     }
+    //llama a la base de datos, obteniendo los datos de categorías y presentándolo en botones
     async function createButtonsCategories() {
       try {
         await axios
@@ -92,6 +95,7 @@
         console.log(error);
       }
     }
+    //Al presionar el botón de categorías, se llama a la base de datos, filtrando los datos que tengan el id seleccionado. Finalmente muestra esos productos
     async function filterCategory(id) {
       try {
         await axios
@@ -103,10 +107,14 @@
         console.log(error);
       }
     }
+    //Recibe datos, con los que crea los productos a mostrar. También crea las páginas, dependiendo de la cantidad de productos.
     async function createProducts(data) {
       try {
+        //crea una paginación para la clase "products"
         $(".products").pagination({
+          //datos con los que crea la paginación
           dataSource: data,
+          //total de productos a mostrar
           pageSize: 12,
           callback: function (data, pagination) {
             $(".products .wrapper").empty();
@@ -131,6 +139,7 @@
         console.log(error);
       }
     }
+    //función que se utiliza al iniciar. Hace una petición a la base de datos, con el fin de mostrar todos los productos
     async function getData() {
       try {
         await axios
@@ -144,6 +153,18 @@
         console.log(error);
       }
     }
+    //cuando el usuario ingresa datos en el buscador, se hace inmediatamente una petición a la api, mostrando los resultados que tengan en su nombre el contenido escrito.
+    async function filterProduct() {
+      input = document.getElementsByClassName("nav-search-box")[0];
+      let filter = input.value.toUpperCase();
+      try {
+        //función que envía los datos del buscador
+        postData(filter);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    //envía el filtro a la api, obteniendo resultados que contengan nombres similares
     async function postData(data) {
       try {
         axios
@@ -155,15 +176,7 @@
         console.log(error);
       }
     }
-    async function filterProduct() {
-      input = document.getElementsByClassName("nav-search-box")[0];
-      let filter = input.value.toUpperCase();
-      try {
-        postData(filter);
-      } catch (error) {
-        console.log(error);
-      }
-    }
+    //si se presiona un botón de compra, se muestra un mensaje
     async function alertMessage() {
       alert("Lo sentimos, esta función está en construcción");
     }

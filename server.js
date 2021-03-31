@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 5000;
 
 http
   .createServer(async function (req, res) {
+    //envía el html si la petición es válida
     if (req.url == "/" && req.method == "GET") {
       try {
         res.writeHead(200, { "Content-Type": "text/html" });
@@ -21,15 +22,18 @@ http
         return res.end(`error: ${er.message}`);
       }
     }
+    //envía los datos de productos si la petición es válida
     if (req.url.startsWith("/products") && req.method == "GET") {
       try {
         let data = await getData();
         data.forEach((element) => {
+          //calcula el precio en función del descuento
           if (element.discount !== 0) {
             element.price = Math.round(
               element.price - (element.price * element.discount) / 100
             );
           }
+          //reemplaza las imágenes en blanco
           if (element.url_image == null || element.url_image == "") {
             element.url_image =
               "https://www.wilddesignz.com/image/cache/catalog/placeholderproduct-max-228.png";
@@ -42,6 +46,7 @@ http
         return res.end(`error: ${er.message}`);
       }
     }
+    //recibe un filtro de productos y envía los resultados
     if (req.url.startsWith("/products") && req.method == "POST") {
       try {
         let body = "";
@@ -52,11 +57,13 @@ http
           const id = body;
           let data = await getDataLike(id);
           data.forEach((element) => {
+            //calcula el precio en función del descuento
             if (element.discount !== 0) {
               element.price = Math.round(
                 element.price - (element.price * element.discount) / 100
               );
             }
+            //reemplaza las imágenes en blanco
             if (element.url_image == null || element.url_image == "") {
               element.url_image =
                 "https://www.wilddesignz.com/image/cache/catalog/placeholderproduct-max-228.png";
@@ -70,6 +77,7 @@ http
         return res.end(`error: ${er.message}`);
       }
     }
+    //envía el css
     if (req.url.startsWith("/CSS") && req.method == "GET") {
       try {
         res.writeHead(200, { "Content-Type": "text/css" });
@@ -82,6 +90,7 @@ http
         return res.end(`error: ${er.message}`);
       }
     }
+    //envía las categorías de la tabla "category"
     if (req.url.startsWith("/categories") && req.method == "GET") {
       try {
         let data = await getCategories();
@@ -92,6 +101,7 @@ http
         return res.end(`error: ${er.message}`);
       }
     }
+    //envía productos filtrados de la tabla "categoría" según su id de categoría
     if (req.url.startsWith("/categories") && req.method == "POST") {
       try {
         let body = "";
@@ -102,11 +112,13 @@ http
           const datos = body;
           let data = await getCategoriesById(datos);
           data.forEach((element) => {
+            //calcula el precio en función del descuento
             if (element.discount !== 0) {
               element.price = Math.round(
                 element.price - (element.price * element.discount) / 100
               );
             }
+            //reemplaza las imágenes en blanco
             if (element.url_image == null || element.url_image == "") {
               element.url_image =
                 "https://www.wilddesignz.com/image/cache/catalog/placeholderproduct-max-228.png";

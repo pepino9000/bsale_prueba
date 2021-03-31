@@ -6,7 +6,7 @@ var connection = mysql.createPool({
   database: "bsale_test",
 });
 
-//consulta todos los productos en el database
+//consulta todos los productos en la base de datos, ordenándolos por categoría
 const getData = () =>
   new Promise((resolve, reject) => {
     connection.getConnection((err, connection) => {
@@ -23,6 +23,7 @@ const getData = () =>
       );
     });
   });
+//filtra los productos que contengan en su nombre la palabra escogida
 const getDataLike = (name) =>
   new Promise((resolve, reject) => {
     connection.getConnection((err, connection) => {
@@ -39,6 +40,7 @@ const getDataLike = (name) =>
       );
     });
   });
+//obtiene los datos de las categorías (nombre e id)
 const getCategories = () =>
   new Promise((resolve, reject) => {
     connection.getConnection((err, connection) => {
@@ -52,6 +54,7 @@ const getCategories = () =>
       });
     });
   });
+//Filtra los productos según una categoría (se conecta con los botones de categoría del frontend)
 const getCategoriesById = (id) =>
   new Promise((resolve, reject) => {
     connection.getConnection((err, connection) => {
