@@ -36,11 +36,7 @@
         </ul>
       </div>
     </nav>
-    <div class="spinner__div">
-      <div class="spinner-border text-light" role="status">
-        <span class="sr-only">Loading...</span>
-      </div>
-    </div>
+    <div class="spinner__div"></div>
     <div class="container">
       <div class="row categories"></div>
     </div>
@@ -64,16 +60,22 @@
     //muestra un spinner cuando el sitio carga
     async function spinnerOn() {
       try {
-        $(".products").empty();
-        $(".spinner__div").show;
+        $(".categories").hide();
+        $(".products ").hide();
+        $(".spinner__div")
+          .append(`   <div class="spinner-border text-light" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>`);
       } catch (error) {
         console.log(error);
       }
     }
     //quita el spinner
-    function spinerOff() {
+    function spinnerOff() {
       try {
-        $(".spinner__div").hide();
+        $(".categories").show();
+        $(".spinner__div").empty();
+        $(".products ").show();
       } catch (error) {
         console.log(error);
       }
@@ -86,9 +88,9 @@
           .then((data) => {
             data.data.forEach((e) => {
               $(".categories").append(`
-                  <button type="button" onClick="filterCategory(${e.id})" class="btn btn-warning btn-category">
-                    ${e.name}
-                  </button>`);
+                      <button type="button" onClick="filterCategory(${e.id})" class="btn btn-warning btn-category">
+                        ${e.name}
+                      </button>`);
             });
           });
       } catch (error) {
@@ -101,7 +103,7 @@
         await axios
           .post(`https://intense-stream-38532.herokuapp.com/categories`, id)
           .then((data) => {
-            createProducts(data.data).then(spinerOff());
+            createProducts(data.data);
           });
       } catch (error) {
         console.log(error);
@@ -110,6 +112,7 @@
     //Recibe datos, con los que crea los productos a mostrar. También crea las páginas, dependiendo de la cantidad de productos.
     async function createProducts(data) {
       try {
+        spinnerOn();
         //crea una paginación para la clase "products"
         $(".products").pagination({
           //datos con los que crea la paginación
@@ -121,20 +124,23 @@
             data.forEach((element) => {
               $(".products .wrapper")
                 .append(`<div class="col-sm-6 col-md-4 col-xl-3 product" meta=${element.id}>
-                            <div class="box" >
-                              <div class="box__img">
-                                <img class="img-fluid" src="${element.url_image}">
-                              </div>
-                              <div class="box__name">
-                                <h5 class="box__title text-center m-1">${element.name}</h5>
-                              </div>
-                              <h6 class="text-center">$${element.price}</h6>
-                              <button class="btn btn-gold" onClick="alertMessage()">Comprar</button>
-                            </div>
-                          </div>`);
+                                <div class="box" >
+                                  <div class="box__img">
+                                    <img class="img-fluid" src="${element.url_image}">
+                                  </div>
+                                  <div class="box__name">
+                                    <h5 class="box__title text-center m-1">${element.name}</h5>
+                                  </div>
+                                  <h6 class="text-center">$${element.price}</h6>
+                                  <button class="btn btn-gold" onClick="alertMessage()">Comprar</button>
+                                </div>
+                              </div>`);
             });
           },
         });
+        setTimeout(function () {
+          spinnerOff();
+        }, 2000);
       } catch (error) {
         console.log(error);
       }
@@ -145,9 +151,7 @@
         await axios
           .get("https://intense-stream-38532.herokuapp.com/products")
           .then((data) => {
-            createButtonsCategories()
-              .then(createProducts(data.data))
-              .then(spinerOff());
+            createButtonsCategories().then(createProducts(data.data));
           });
       } catch (error) {
         console.log(error);
@@ -170,7 +174,7 @@
         axios
           .post("https://intense-stream-38532.herokuapp.com/products", data)
           .then((e) => {
-            createProducts(e.data).then(spinerOff());
+            createProducts(e.data);
           });
       } catch (error) {
         console.log(error);
