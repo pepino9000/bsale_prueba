@@ -11,6 +11,7 @@ npm (npm init)
 mysql (npm i mysql)
 
 
+
 Instalación
 
 Crear nueva carpeta
@@ -23,6 +24,8 @@ git clone https://git.heroku.com/intense-stream-38532.git
 
 Con esto se descargará el código en la carpeta
 
+
+
 Ejecución
 
 Escribir cd intense-stream-38532 (o el nombre que tenga la carpeta)
@@ -34,6 +37,7 @@ El servidor por defecto se ejecuta en el puerto 3000, por lo que debe estar libe
 Finalmente se debe acceder, en el navegador, a: 
 
 http://localhost:3000/ 
+
 
 
 Construido con
