@@ -6,7 +6,6 @@ const {
   getCategories,
   getCategoriesById,
 } = require("./consultas");
-const PORT = process.env.PORT || 5000;
 
 http
   .createServer(async function (req, res) {
@@ -133,4 +132,4 @@ http
       }
     }
   })
-  .listen(PORT);
+  .listen(3000);
